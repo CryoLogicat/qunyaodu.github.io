@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryoLogicat - 个人主页</title>
+    <meta name="description" content="CryoLogicat 的个人主页 - 哈尔滨工业大学人工智能专业本科生，专注于自然语言处理、机器学习、深度学习">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-color: #333;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --border-color: #e1e8ed;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        header .location {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        header .location i {
+            margin-right: 5px;
+        }
+
+        /* Social Links */
+        .social-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.8em;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            opacity: 0.8;
+        }
+
+        /* Main Content */
+        main {
+            padding: 60px 0;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        section h2 {
+            font-size: 2.2em;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about-content {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .about-content p {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .skill-item i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .skill-item h3 {
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-card h3 {
+            padding: 20px 20px 10px;
+            color: var(--primary-color);
+            font-size: 1.3em;
+        }
+
+        .project-card p {
+            padding: 0 20px 20px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .project-card .tags {
+            padding: 0 20px 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-card .tags span {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+        }
+
+        .project-card .links {
+            padding: 0 20px 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .project-card .links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .project-card .links a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Learning Section */
+        .learning-list {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .learning-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .learning-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 1.1em;
+        }
+
+        .learning-list li:last-child {
+            border-bottom: none;
+        }
+
+        .learning-list li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+
+        footer p {
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header .subtitle {
+                font-size: 1.1em;
+            }
+
+            section h2 {
+                font-size: 1.8em;
+            }
+
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <img src="https://avatars.githubusercontent.com/u/170010613?v=4" alt="CryoLogicat" class="avatar">
+            <h1>杜群瑶 (CryoLogicat)</h1>
+            <p class="subtitle">正在学习大语言模型相关技术</p>
+            <p class="location">
+                <i class="fas fa-map-marker-alt"></i>
+                黑龙江省哈尔滨市 · 哈尔滨工业大学
+            </p>
+            <div class="social-links">
+                <a href="https://github.com/CryoLogicat" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="mailto:your-email@example.com" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- About Section -->
+        <section class="fade-in">
+            <h2><i class="fas fa-user"></i> 关于我</h2>
+            <div class="about-content">
+                <p>你好！我是杜群瑶，一名哈尔滨工业大学人工智能专业的本科生。</p>
+                <p>我热爱技术，特别是自然语言处理、机器学习、深度学习和强化学习领域。我相信技术可以改变世界，希望通过自己的学习和实践，为人工智能的发展贡献一份力量。</p>
+                <p>目前正在积极学习大语言模型相关技术，探索 AI 的更多可能性。</p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="fade-in">
+            <h2><i class="fas fa-code"></i> 技术栈</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <i class="fab fa-python"></i>
+                    <h3>Python</h3>
+                    <p>主要编程语言</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-brain"></i>
+                    <h3>深度学习</h3>
+                    <p>PyTorch, TensorFlow</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-robot"></i>
+                    <h3>自然语言处理</h3>
+                    <p>NLP 技术与应用</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-database"></i>
+                    <h3>机器学习</h3>
+                    <p>ML 算法与实践</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>强化学习</h3>
+                    <p>RL 研究与应用</p>
+                </div>
+                <div class="skill-item">
+                    <i class="fab fa-git-alt"></i>
+                    <h3>Git</h3>
+                    <p>版本控制</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Section -->
+        <section class="fade-in">
+            <h2><i class="fas fa-graduation-cap"></i> 正在学习</h2>
+            <div class="learning-list">
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> 自然语言处理 (NLP)</li>
+                    <li><i class="fas fa-check-circle"></i> 机器学习 (Machine Learning)</li>
+                    <li><i class="fas fa-check-circle"></i> 深度学习 (Deep Learning)</li>
+                    <li><i class="fas fa-check-circle"></i> 强化学习 (Reinforcement Learning)</li>
+                    <li><i class="fas fa-check-circle"></i> 大语言模型 (LLM)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="fade-in">
+            <h2><i class="fas fa-folder-open"></i> 项目展示</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>英特尔手册中文翻译</h3>
+                    <p>64位和IA32架构软件开发者手册的中文翻译版本（基于Deepseek翻译）。</p>
+                    <div class="tags">
+                        <span>文档</span>
+                        <span>翻译</span>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/CryoLogicat/64-and-IA32-Architectures-Software-Developer-s-Manual-by-Chinese" target="_blank">
+                            <i class="fab fa-github"></i> 查看项目
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>NLP 上手教程</h3>
+                    <p>复旦大学自然语言处理上手教程，包含实践练习和示例代码。</p>
+                    <div class="tags">
+                        <span>NLP</span>
+                        <span>教程</span>
+                        <span>Python</span>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/CryoLogicat/nlp-beginner" target="_blank">
+                            <i class="fab fa-github"></i> 查看项目
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>NumPy 练习集</h3>
+                    <p>100个 NumPy 练习题（含解答），提升 Python 数据处理能力。</p>
+                    <div class="tags">
+                        <span>NumPy</span>
+                        <span>Python</span>
+                        <span>练习</span>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/CryoLogicat/numpy-100" target="_blank">
+                            <i class="fab fa-github"></i> 查看项目
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>Gemini API 代理</h3>
+                    <p>将 Gemini API 免费中转到国内，支持多 API Key 负载均衡。</p>
+                    <div class="tags">
+                        <span>API</span>
+                        <span>JavaScript</span>
+                        <span>代理</span>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/CryoLogicat/gemini-balance-lite" target="_blank">
+                            <i class="fab fa-github"></i> 查看项目
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <h3>RAGEN</h3>
+                    <p>利用强化学习在交互式随机环境中训练大语言模型推理代理。</p>
+                    <div class="tags">
+                        <span>强化学习</span>
+                        <span>LLM</span>
+                        <span>Python</span>
+                    </div>
+                    <div class="links">
+                        <a href="https://github.com/CryoLogicat/RAGEN" target="_blank">
+                            <i class="fab fa-github"></i> 查看项目
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 CryoLogicat. All rights reserved.</p>
+            <p>Made with <i class="fas fa-heart" style="color: #ff6b6b;"></i> and deployed on GitHub Pages</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
