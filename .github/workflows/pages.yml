@@ -1,0 +1,68 @@
+name: Deploy Homepage and Blog
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout homepage
+        uses: actions/checkout@v6
+        with:
+          path: homepage
+      - name: Checkout blog
+        uses: actions/checkout@v6
+        with:
+          repository: CryoLogicat/banyeshu-notes
+          ref: main
+          path: blog-source
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: blog-source/package-lock.json
+      - name: Install blog dependencies
+        run: npm ci
+        working-directory: blog-source
+      - name: Build blog for /blog
+        run: npm run build:pages
+        working-directory: blog-source
+        env:
+          NEXT_PUBLIC_BASE_PATH: /blog
+          NEXT_PUBLIC_SITE_URL: https://www.qydu.top/blog/
+      - name: Assemble site
+        run: |
+          mkdir -p _site/blog
+          rsync -a --exclude='.git' --exclude='.github' homepage/ _site/
+          cp -R blog-source/out/. _site/blog/
+          touch _site/.nojekyll
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
