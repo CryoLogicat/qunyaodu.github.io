@@ -22,11 +22,14 @@ jobs:
         uses: actions/checkout@v6
         with:
           path: homepage
+      - name: Read pinned blog version
+        id: blog-version
+        run: echo "sha=$(cat homepage/.blog-source-sha)" >> "$GITHUB_OUTPUT"
       - name: Checkout blog
         uses: actions/checkout@v6
         with:
           repository: CryoLogicat/banyeshu-notes
-          ref: main
+          ref: ${{ steps.blog-version.outputs.sha }}
           path: blog-source
       - name: Setup Node
         uses: actions/setup-node@v4
