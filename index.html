@@ -6,37 +6,99 @@
   <title>Qunyao Du · 杜群瑶</title>
   <meta
     name="description"
-    content="Personal homepage of Qunyao Du, an undergraduate student in Artificial Intelligence at Harbin Institute of Technology."
+    content="Personal homepage of Qunyao Du (CryoLogicat), an undergraduate student in Artificial Intelligence at Harbin Institute of Technology."
   />
-  <meta name="theme-color" content="#ffffff" />
+  <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0f17" media="(prefers-color-scheme: dark)" />
+  <script>
+    (function () {
+      try {
+        var savedTheme = localStorage.getItem('theme');
+        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        document.documentElement.setAttribute('data-theme', savedTheme || (prefersDark ? 'dark' : 'light'));
 
+        var savedLang = localStorage.getItem('lang');
+        var browserLang = (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+        var lang = savedLang || browserLang;
+        document.documentElement.setAttribute('data-lang', lang);
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      } catch (e) {}
+    })();
+  </script>
   <style>
     :root {
-      --background: #ffffff;
-      --text: #24292f;
-      --muted: #667085;
-      --subtle: #8a94a3;
-      --line: #e5e7eb;
-      --accent: #1769aa;
-      --max-width: 920px;
+      --bg: #f8fafc;
+      --bg-elevated: rgba(255, 255, 255, 0.85);
+      --card: #ffffff;
+      --card-hover: #fcfdff;
+      --text: #0f172a;
+      --muted: #475569;
+      --subtle: #64748b;
+      --line: #e2e8f0;
+      --line-strong: #cbd5e1;
+      --accent: #2563eb;
+      --accent-2: #0891b2;
+      --accent-soft: rgba(37, 99, 235, 0.08);
+      --accent-glow: rgba(37, 99, 235, 0.14);
+      --dot-color: rgba(15, 23, 42, 0.07);
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 10px 30px -12px rgba(15, 23, 42, 0.1);
+      --max-width: 960px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      --font-serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Noto Serif SC", serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }
 
-    * {
+    [data-theme="dark"] {
+      --bg: #0b0f17;
+      --bg-elevated: rgba(15, 23, 42, 0.78);
+      --card: #111827;
+      --card-hover: #161f32;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --subtle: #64748b;
+      --line: #1e293b;
+      --line-strong: #334155;
+      --accent: #60a5fa;
+      --accent-2: #22d3ee;
+      --accent-soft: rgba(96, 165, 250, 0.12);
+      --accent-glow: rgba(56, 189, 248, 0.14);
+      --dot-color: rgba(148, 163, 184, 0.08);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 14px 36px -12px rgba(0, 0, 0, 0.55);
+    }
+
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
     }
 
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 84px;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
       margin: 0;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, var(--accent-glow), transparent 70%),
+        radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 100% 100%, 24px 24px;
+      background-attachment: fixed, scroll;
       color: var(--text);
-      background: var(--background);
-      font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Noto Serif SC", serif;
+      font-family: var(--font-sans);
       font-size: 16px;
-      line-height: 1.72;
+      line-height: 1.68;
       text-rendering: optimizeLegibility;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    ::selection {
+      background: var(--accent-soft);
+      color: var(--accent);
     }
 
     a {
@@ -44,232 +106,710 @@
       text-decoration: none;
     }
 
-    a:hover,
-    a:focus-visible {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-    }
-
-    a:focus-visible {
+    a:focus-visible,
+    button:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 3px;
-      border-radius: 2px;
+      border-radius: 6px;
     }
 
-    .page {
-      width: min(var(--max-width), calc(100% - 48px));
-      margin: 0 auto;
-      padding: 64px 0 36px;
-    }
-
-    .site-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 32px;
-      padding-bottom: 28px;
+    /* Sticky Glass Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: var(--bg-elevated);
       border-bottom: 1px solid var(--line);
     }
 
-    .identity h1 {
-      margin: 0;
-      font-family: Charter, "Bitstream Charter", "Sitka Display", Cambria, Georgia, "Noto Serif SC", serif;
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      font-weight: 600;
-      line-height: 1.16;
-      letter-spacing: -0.025em;
+    .navbar-inner {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .identity .chinese-name {
-      margin-left: 0.28em;
-      font-family: inherit;
-      font-size: 0.68em;
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 6px;
+    }
+
+    .nav-links a {
+      padding: 6px 11px;
+      border-radius: 8px;
+      font-size: 0.88rem;
       font-weight: 500;
       color: var(--muted);
-      letter-spacing: 0;
-      white-space: nowrap;
+      transition: color 0.15s ease, background-color 0.15s ease;
     }
 
-    .role {
-      margin: 9px 0 0;
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--accent-soft);
+    }
+
+    .ctrl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--card);
       color: var(--muted);
-      font-size: 1.02rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
     }
 
-    .header-links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 6px 18px;
-      padding-top: 8px;
-      font-size: 0.94rem;
-      white-space: nowrap;
+    .ctrl-btn:hover {
+      border-color: var(--line-strong);
+      color: var(--text);
+      transform: translateY(-1px);
     }
 
-    main {
-      padding-top: 38px;
+    .ctrl-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
 
-    .profile {
+    /* Main Container */
+    .page {
+      width: min(var(--max-width), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 44px 0 64px;
+    }
+
+    /* Hero Card */
+    .hero {
+      position: relative;
       display: grid;
-      grid-template-columns: 164px minmax(0, 1fr);
-      gap: 34px;
-      align-items: start;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(500px circle at 0% 0%, var(--accent-soft), transparent 60%);
+      pointer-events: none;
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 132px;
+      height: 132px;
+      padding: 4px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 10px 25px -10px var(--accent-glow);
+      flex-shrink: 0;
     }
 
     .avatar {
       display: block;
-      width: 164px;
-      aspect-ratio: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
       object-fit: cover;
-      border-radius: 4px;
+      background: var(--card);
     }
 
-    .profile-copy p {
-      margin: 0 0 13px;
+    .status-dot {
+      position: absolute;
+      right: -3px;
+      bottom: -3px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #10b981;
+      border: 3px solid var(--card);
+      box-shadow: 0 0 0 1px var(--line);
     }
 
-    .profile-copy p:last-child {
-      margin-bottom: 0;
+    .hero-content {
+      position: relative;
+      min-width: 0;
     }
 
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .pill.accent {
+      border-color: transparent;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+    }
+
+    .secondary-name {
+      margin-left: 0.28em;
+      font-size: 0.65em;
+      font-weight: 500;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .hero-subtitle {
+      margin: 10px 0 0;
+      font-size: 1.03rem;
+      color: var(--muted);
+      max-width: 60ch;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      margin-top: 14px;
+      font-size: 0.88rem;
+      color: var(--subtle);
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-meta svg {
+      width: 15px;
+      height: 15px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: inherit;
+      transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--line-strong);
+      background: var(--card-hover);
+      text-decoration: none;
+    }
+
+    .btn.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #ffffff;
+      box-shadow: 0 6px 18px -6px var(--accent-glow);
+    }
+
+    .btn.primary:hover {
+      opacity: 0.94;
+      color: #ffffff;
+    }
+
+    .btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    /* Sections */
     section {
-      padding: 34px 0;
-      border-bottom: 1px solid var(--line);
+      margin-top: 52px;
     }
 
-    section:first-child {
-      padding-top: 0;
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
-    section:last-child {
-      border-bottom: 0;
-    }
-
-    h2 {
-      margin: 0 0 18px;
-      font-family: Charter, "Bitstream Charter", "Sitka Display", Cambria, Georgia, "Noto Serif SC", serif;
+    .section-title {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-serif);
       font-size: 1.45rem;
       font-weight: 600;
       letter-spacing: -0.015em;
     }
 
-    h3 {
-      margin: 0;
-      font-size: 1.02rem;
-      font-weight: 650;
-    }
-
-    .plain-list {
-      margin: 0;
-      padding-left: 1.3rem;
-    }
-
-    .plain-list li + li {
-      margin-top: 5px;
-    }
-
-    .entry {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 8px 24px;
-    }
-
-    .entry-meta {
+    .section-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
       color: var(--subtle);
-      font-size: 0.92rem;
-      white-space: nowrap;
     }
 
-    .education-detail {
-      margin: 5px 0 0;
+    /* Interactive Card Base */
+    .card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        360px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        var(--accent-soft),
+        transparent 65%
+      );
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::after {
+      opacity: 1;
+    }
+
+    .card:hover {
+      border-color: var(--line-strong);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    /* About & Education Split */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 18px;
+    }
+
+    .about-card {
+      padding: 26px 28px;
+    }
+
+    .about-card p {
+      margin: 0 0 12px;
       color: var(--muted);
     }
 
-    .inline-list {
+    .about-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-card strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .edu-card {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .edu-label {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .edu-school {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 650;
+      color: var(--text);
+    }
+
+    .edu-degree {
+      margin: 5px 0 0;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+
+    .edu-time {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--subtle);
+      padding-top: 12px;
+      border-top: 1px dashed var(--line);
+    }
+
+    /* Research Interests Bento */
+    .bento-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .interest-card {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .icon-box svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .interest-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 650;
+      color: var(--text);
+    }
+
+    .interest-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* Featured Writing Banner */
+    .writing-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 26px 28px;
+      color: inherit;
+    }
+
+    .writing-banner:hover {
+      text-decoration: none;
+    }
+
+    .writing-tag-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 5px 24px;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .writing-banner h3 {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 1.32rem;
+      font-weight: 650;
+      color: var(--text);
+    }
+
+    .writing-banner p {
+      margin: 6px 0 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .writing-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 15px;
+      border-radius: 10px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.15s ease;
+    }
+
+    .writing-banner:hover .writing-cta {
+      transform: translateX(3px);
+    }
+
+    /* Life / Hobbies & Toolbox Grid */
+    .life-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+    }
+
+    .hobby-card {
+      padding: 24px 26px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .hobby-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent-soft), rgba(16, 185, 129, 0.12));
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .hobby-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .hobby-body h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 650;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hobby-body p {
+      margin: 8px 0 0;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tools-card {
+      padding: 24px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .tools-title {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+    }
+
+    .tools-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
       margin: 0;
       padding: 0;
       list-style: none;
-      color: var(--muted);
     }
 
+    .tools-chips li {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .tools-note {
+      font-size: 0.86rem;
+      color: var(--subtle);
+    }
+
+    /* Footer */
     footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
+      margin-top: 64px;
       padding-top: 24px;
       border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
       color: var(--subtle);
-      font-size: 0.88rem;
+    }
+
+    footer a {
+      color: var(--subtle);
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(16px);
+      padding: 9px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--line-strong);
+      background: var(--card);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 820px) {
+      .about-grid,
+      .life-grid,
+      .bento-3 {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 680px) {
-      .page {
-        width: min(100% - 32px, var(--max-width));
-        padding-top: 38px;
+      .nav-links {
+        display: none;
       }
 
-      .site-header {
-        display: block;
-      }
-
-      .header-links {
-        justify-content: flex-start;
-        margin-top: 17px;
-        padding-top: 0;
-        white-space: normal;
-      }
-
-      main {
-        padding-top: 30px;
-      }
-
-      .profile {
-        grid-template-columns: 112px minmax(0, 1fr);
-        gap: 22px;
-      }
-
-      .avatar {
-        width: 112px;
-      }
-
-      .entry {
+      .hero {
         grid-template-columns: 1fr;
-        gap: 3px;
+        padding: 24px;
+        gap: 20px;
       }
 
-      .entry-meta {
-        grid-column: 1;
-      }
-    }
-
-    @media (max-width: 460px) {
-      .identity .chinese-name {
-        display: block;
-        margin: 5px 0 0;
+      .avatar-wrap {
+        width: 96px;
+        height: 96px;
       }
 
-      .profile {
-        grid-template-columns: 1fr;
-      }
-
-      .avatar {
-        width: 132px;
-      }
-
-      section {
-        padding: 28px 0;
+      .writing-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
       }
 
       footer {
-        display: block;
-      }
-
-      footer span {
-        display: block;
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
 
@@ -277,94 +817,494 @@
       html {
         scroll-behavior: auto;
       }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition: none !important;
+      }
     }
   </style>
 </head>
 
 <body>
-  <div class="page">
-    <header class="site-header">
-      <div class="identity">
-        <h1>Qunyao Du <span class="chinese-name">杜群瑶</span></h1>
-        <p class="role">Undergraduate Student · Harbin Institute of Technology</p>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#top" class="brand">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>CryoLogicat</span>
+      </a>
+
+      <div class="nav-right">
+        <nav class="nav-links" aria-label="Section navigation">
+          <a href="#about" data-i18n="nav_about">About</a>
+          <a href="#interests" data-i18n="nav_interests">Interests</a>
+          <a href="#writing" data-i18n="nav_writing">Writing</a>
+          <a href="#life" data-i18n="nav_life">Life</a>
+        </nav>
+
+        <button type="button" class="ctrl-btn" id="lang-toggle" aria-label="Switch language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span id="lang-label">中文</span>
+        </button>
+
+        <button type="button" class="ctrl-btn" id="theme-toggle" aria-label="Toggle color theme">
+          <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <span id="theme-label">Theme</span>
+        </button>
       </div>
+    </div>
+  </header>
 
-      <nav class="header-links" aria-label="Contact links">
-        <a href="mailto:qunyao.du@foxmail.com">Email</a>
-        <a href="https://github.com/CryoLogicat" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.qydu.top/blog/">Blog</a>
-        <a href="https://space.bilibili.com/627043519" target="_blank" rel="noopener noreferrer">Bilibili</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="profile" aria-labelledby="about-heading">
+  <div class="page" id="top">
+    <!-- Hero -->
+    <section class="hero" aria-label="Introduction" style="margin-top: 0;">
+      <div class="avatar-wrap">
         <img
           class="avatar"
           src="https://avatars.githubusercontent.com/u/170010613?v=4"
           alt="Portrait of Qunyao Du"
-          width="164"
-          height="164"
+          width="132"
+          height="132"
         />
-        <div class="profile-copy">
-          <h2 id="about-heading">About</h2>
-          <p>
-            I am an undergraduate student in Artificial Intelligence at the School of Future Technology,
-            Harbin Institute of Technology. I am currently building a solid foundation in natural language
-            processing, machine learning, deep learning, and reinforcement learning.
+        <span class="status-dot" title="Active in AI & LLM Research"></span>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badges">
+          <span class="pill accent" data-i18n="hero_badge">AI Undergraduate · HIT '27</span>
+          <span class="pill">qydu.top</span>
+        </div>
+
+        <h1 data-i18n="hero_name">Qunyao Du <span class="secondary-name">杜群瑶</span></h1>
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
+          Exploring how Large Language Models reason, use tools, and learn from interactive environments via Reinforcement Learning.
+        </p>
+
+        <div class="hero-meta">
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+            </svg>
+            <span data-i18n="hero_school">School of Future Technology, Harbin Institute of Technology</span>
+          </span>
+          <span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span data-i18n="hero_location">Harbin, China</span>
+          </span>
+        </div>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="https://www.qydu.top/blog/">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+            </svg>
+            <span data-i18n="btn_blog">Read Blog</span>
+          </a>
+          <a class="btn" href="https://github.com/CryoLogicat" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"></path>
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a class="btn" href="mailto:qunyao.du@foxmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+            <span data-i18n="btn_email">Email</span>
+          </a>
+          <button type="button" class="btn" id="copy-email" data-email="qunyao.du@foxmail.com" title="Copy email address">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+            </svg>
+            <span data-i18n="btn_copy">Copy Email</span>
+          </button>
+          <a class="btn" href="https://space.bilibili.com/627043519" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="6" width="18" height="13" rx="3"></rect>
+              <path d="m8 3 3 3M16 3l-3 3M9 12v2M15 12v2"></path>
+            </svg>
+            <span>Bilibili</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Education -->
+    <section id="about" class="reveal">
+      <div class="section-head">
+        <h2 class="section-title" data-i18n="sec_about_title">About &amp; Education</h2>
+        <span class="section-kicker" data-i18n="sec_about_kicker">01 / PROFILE</span>
+      </div>
+
+      <div class="about-grid">
+        <div class="card about-card">
+          <p data-i18n="about_p1">
+            I am an undergraduate student majoring in <strong>Artificial Intelligence</strong> at the School of Future Technology, Harbin Institute of Technology. I am building a solid foundation across natural language processing, machine learning, deep learning, and reinforcement learning.
           </p>
-          <p>
-            My current interests center on large language models and AI agents, particularly how models reason,
-            use tools, and complete tasks reliably.
+          <p data-i18n="about_p2">
+            My current focus lies in <strong>Large Language Models</strong> and <strong>AI Agents</strong>—especially how models plan, invoke tools, and reason reliably in multi-turn interactive environments.
           </p>
         </div>
-      </section>
 
-      <section aria-labelledby="interests-heading">
-        <h2 id="interests-heading">Research Interests</h2>
-        <ul class="plain-list">
-          <li>Large Language Models and Natural Language Processing</li>
-          <li>AI Agents and Tool Learning</li>
-          <li>Reinforcement Learning</li>
-        </ul>
-      </section>
-
-      <section aria-labelledby="education-heading">
-        <h2 id="education-heading">Education</h2>
-        <div class="entry">
+        <div class="card edu-card">
           <div>
-            <h3>Harbin Institute of Technology</h3>
-            <p class="education-detail">B.E. in Artificial Intelligence, School of Future Technology</p>
+            <div class="edu-label" data-i18n="edu_label">Education</div>
+            <h3 class="edu-school" data-i18n="edu_school">Harbin Institute of Technology</h3>
+            <p class="edu-degree" data-i18n="edu_degree">
+              B.E. in Artificial Intelligence<br />
+              School of Future Technology
+            </p>
           </div>
-          <span class="entry-meta">2023 – Present</span>
+          <div class="edu-time">
+            <span data-i18n="edu_time">2023 – Present</span>
+            <span>·</span>
+            <span data-i18n="hero_location">Harbin, China</span>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section aria-labelledby="tools-heading">
-        <h2 id="tools-heading">Tools</h2>
-        <ul class="inline-list">
-          <li>Python</li>
-          <li>PyTorch</li>
-          <li>Git / GitHub</li>
-        </ul>
-      </section>
+    <!-- Research Interests -->
+    <section id="interests" class="reveal">
+      <div class="section-head">
+        <h2 class="section-title" data-i18n="sec_interests_title">Research Interests</h2>
+        <span class="section-kicker" data-i18n="sec_interests_kicker">02 / FOCUS</span>
+      </div>
 
-      <section aria-labelledby="writing-heading">
-        <h2 id="writing-heading">Writing</h2>
-        <div class="entry">
+      <div class="bento-3">
+        <div class="card interest-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4Z"></path>
+              <path d="M9 14h6"></path>
+            </svg>
+          </div>
+          <h3 data-i18n="int_1_title">LLMs &amp; NLP</h3>
+          <p data-i18n="int_1_desc">Understanding pre-training, alignment, and reasoning mechanisms in modern language models.</p>
+        </div>
+
+        <div class="card interest-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"></path>
+            </svg>
+          </div>
+          <h3 data-i18n="int_2_title">AI Agents &amp; Tool Use</h3>
+          <p data-i18n="int_2_desc">Designing autonomous agents capable of planning, tool invocation, and reliable task execution.</p>
+        </div>
+
+        <div class="card interest-card">
+          <div class="icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3v18h18"></path>
+              <path d="m19 9-5 5-4-4-3 3"></path>
+            </svg>
+          </div>
+          <h3 data-i18n="int_3_title">Reinforcement Learning</h3>
+          <p data-i18n="int_3_desc">Training reasoning policies in stochastic, multi-turn interactive environments.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Writing -->
+    <section id="writing" class="reveal">
+      <div class="section-head">
+        <h2 class="section-title" data-i18n="sec_writing_title">Writing</h2>
+        <span class="section-kicker" data-i18n="sec_writing_kicker">03 / BLOG</span>
+      </div>
+
+      <a class="card writing-banner" href="https://www.qydu.top/blog/">
+        <div>
+          <div class="writing-tag-row">
+            <span class="pill accent">qydu.top/blog</span>
+            <span class="pill" data-i18n="blog_tag_1">Paper Notes</span>
+            <span class="pill" data-i18n="blog_tag_2">Agents &amp; RL</span>
+          </div>
+          <h3>Half a Page · 半页书</h3>
+          <p data-i18n="blog_desc">Reading notes and technical reflections on LLM papers, AI agents, and reinforcement learning.</p>
+        </div>
+        <span class="writing-cta" data-i18n="blog_cta">Visit Blog ↗</span>
+      </a>
+    </section>
+
+    <!-- Life & Toolbox -->
+    <section id="life" class="reveal">
+      <div class="section-head">
+        <h2 class="section-title" data-i18n="sec_life_title">Hobbies &amp; Toolbox</h2>
+        <span class="section-kicker" data-i18n="sec_life_kicker">04 / BEYOND CODE</span>
+      </div>
+
+      <div class="life-grid">
+        <div class="card hobby-card">
+          <div class="hobby-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10.5" cy="9.5" r="6.5"></circle>
+              <path d="m15 14 5.5 5.5a1.4 1.4 0 0 1-2 2L13 16"></path>
+              <circle cx="19" cy="5" r="2.2"></circle>
+            </svg>
+          </div>
+          <div class="hobby-body">
+            <h3>
+              <span data-i18n="hobby_title">Table Tennis</span>
+              <span class="pill accent" data-i18n="hobby_badge">Hobby</span>
+            </h3>
+            <p data-i18n="hobby_desc">
+              Outside of code and papers, I enjoy playing table tennis—it keeps my mind sharp, improves reflexes, and is my favorite way to recharge after studying.
+            </p>
+          </div>
+        </div>
+
+        <div class="card tools-card">
           <div>
-            <h3><a href="https://www.qydu.top/blog/">Half a Page · 半页书</a></h3>
-            <p class="education-detail">Notes on LLM papers, AI agents, and reinforcement learning.</p>
+            <div class="tools-title" data-i18n="tools_title">Toolbox</div>
+            <ul class="tools-chips" style="margin-top: 12px;">
+              <li>Python</li>
+              <li>PyTorch</li>
+              <li>Git / GitHub</li>
+            </ul>
           </div>
-          <span class="entry-meta">Blog</span>
+          <span class="tools-note" data-i18n="tools_note">Always learning &amp; building.</span>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
     <footer>
-      <span>© 2026 Qunyao Du</span>
-      <span>Hosted on GitHub Pages</span>
+      <span data-i18n="footer_copy">© 2026 Qunyao Du (CryoLogicat) · Hosted on GitHub Pages</span>
+      <a href="#top" data-i18n="footer_top">Back to top ↑</a>
     </footer>
   </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" data-i18n="toast_copied">Email copied: qunyao.du@foxmail.com</div>
+
+  <script>
+    (function () {
+      var i18n = {
+        en: {
+          page_title: 'Qunyao Du · 杜群瑶',
+          nav_about: 'About',
+          nav_interests: 'Interests',
+          nav_writing: 'Writing',
+          nav_life: 'Life',
+          lang_btn: '中文',
+          theme_light: 'Light',
+          theme_dark: 'Dark',
+          hero_badge: "AI Undergraduate · HIT '27",
+          hero_name: 'Qunyao Du <span class="secondary-name">杜群瑶</span>',
+          hero_subtitle: 'Exploring how Large Language Models reason, use tools, and learn from interactive environments via Reinforcement Learning.',
+          hero_school: 'School of Future Technology, Harbin Institute of Technology',
+          hero_location: 'Harbin, China',
+          btn_blog: 'Read Blog',
+          btn_email: 'Email',
+          btn_copy: 'Copy Email',
+          sec_about_title: 'About &amp; Education',
+          sec_about_kicker: '01 / PROFILE',
+          about_p1: 'I am an undergraduate student majoring in <strong>Artificial Intelligence</strong> at the School of Future Technology, Harbin Institute of Technology. I am building a solid foundation across natural language processing, machine learning, deep learning, and reinforcement learning.',
+          about_p2: 'My current focus lies in <strong>Large Language Models</strong> and <strong>AI Agents</strong>—especially how models plan, invoke tools, and reason reliably in multi-turn interactive environments.',
+          edu_label: 'Education',
+          edu_school: 'Harbin Institute of Technology',
+          edu_degree: 'B.E. in Artificial Intelligence<br />School of Future Technology',
+          edu_time: '2023 – Present',
+          sec_interests_title: 'Research Interests',
+          sec_interests_kicker: '02 / FOCUS',
+          int_1_title: 'LLMs &amp; NLP',
+          int_1_desc: 'Understanding pre-training, alignment, and reasoning mechanisms in modern language models.',
+          int_2_title: 'AI Agents &amp; Tool Use',
+          int_2_desc: 'Designing autonomous agents capable of planning, tool invocation, and reliable task execution.',
+          int_3_title: 'Reinforcement Learning',
+          int_3_desc: 'Training reasoning policies in stochastic, multi-turn interactive environments.',
+          sec_writing_title: 'Writing',
+          sec_writing_kicker: '03 / BLOG',
+          blog_tag_1: 'Paper Notes',
+          blog_tag_2: 'Agents &amp; RL',
+          blog_desc: 'Reading notes and technical reflections on LLM papers, AI agents, and reinforcement learning.',
+          blog_cta: 'Visit Blog ↗',
+          sec_life_title: 'Hobbies &amp; Toolbox',
+          sec_life_kicker: '04 / BEYOND CODE',
+          hobby_title: 'Table Tennis',
+          hobby_badge: 'Hobby',
+          hobby_desc: 'Outside of code and papers, I enjoy playing table tennis—it keeps my mind sharp, improves reflexes, and is my favorite way to recharge after studying.',
+          tools_title: 'Toolbox',
+          tools_note: 'Always learning &amp; building.',
+          footer_copy: '© 2026 Qunyao Du (CryoLogicat) · Hosted on GitHub Pages',
+          footer_top: 'Back to top ↑',
+          toast_copied: 'Email copied: qunyao.du@foxmail.com'
+        },
+        zh: {
+          page_title: '杜群瑶 · Qunyao Du',
+          nav_about: '关于',
+          nav_interests: '研究方向',
+          nav_writing: '博客',
+          nav_life: '生活',
+          lang_btn: 'EN',
+          theme_light: '浅色',
+          theme_dark: '深色',
+          hero_badge: '哈工大人工智能本科生 · 2023级',
+          hero_name: '杜群瑶 <span class="secondary-name">Qunyao Du</span>',
+          hero_subtitle: '专注于大语言模型推理、AI Agent 工具调用，以及强化学习在交互式环境中的训练与应用。',
+          hero_school: '哈尔滨工业大学 · 未来技术学院',
+          hero_location: '黑龙江 · 哈尔滨',
+          btn_blog: '阅读博客',
+          btn_email: '发送邮件',
+          btn_copy: '复制邮箱',
+          sec_about_title: '关于与教育经历',
+          sec_about_kicker: '01 / 个人简介',
+          about_p1: '我是哈尔滨工业大学未来技术学院<strong>人工智能</strong>专业的一名本科生，目前正在系统夯实自然语言处理、机器学习、深度学习与强化学习等基础理论与工程实践。',
+          about_p2: '我当前的研究兴趣集中在<strong>大语言模型（LLM）</strong>与 <strong>AI 智能体（AI Agents）</strong>，重点关注模型如何在多轮交互环境中进行规划、调用工具并稳定完成复杂任务。',
+          edu_label: '教育背景',
+          edu_school: '哈尔滨工业大学',
+          edu_degree: '人工智能专业 · 工学学士（在读）<br />未来技术学院',
+          edu_time: '2023 – 至今',
+          sec_interests_title: '研究兴趣',
+          sec_interests_kicker: '02 / 研究方向',
+          int_1_title: '大语言模型与 NLP',
+          int_1_desc: '探索现代语言模型的预训练、对齐机制以及复杂推理能力的涌现与提升。',
+          int_2_title: 'AI 智能体与工具学习',
+          int_2_desc: '研究具备自主规划、工具调用与多步可靠执行能力的智能体系统。',
+          int_3_title: '强化学习',
+          int_3_desc: '关注在随机、多轮交互环境中通过强化学习训练与优化推理策略。',
+          sec_writing_title: '博客写作',
+          sec_writing_kicker: '03 / 技术随笔',
+          blog_tag_1: '论文笔记',
+          blog_tag_2: 'Agents &amp; RL',
+          blog_desc: '记录大语言模型论文精读、AI Agent 实践以及强化学习相关的学习笔记与思考。',
+          blog_cta: '访问博客 ↗',
+          sec_life_title: '兴趣爱好与常用工具',
+          sec_life_kicker: '04 / 生活与工具',
+          hobby_title: '乒乓球',
+          hobby_badge: '兴趣爱好',
+          hobby_desc: '科研与写代码之外，我非常喜欢打乒乓球——既能锻炼敏捷反应与专注力，也是平时学习之余放松身心的最佳方式。',
+          tools_title: '常用工具',
+          tools_note: '保持好奇，持续学习与实践。',
+          footer_copy: '© 2026 杜群瑶 (CryoLogicat) · 部署于 GitHub Pages',
+          footer_top: '返回顶部 ↑',
+          toast_copied: '已复制邮箱：qunyao.du@foxmail.com'
+        }
+      };
+
+      var root = document.documentElement;
+      var langToggle = document.getElementById('lang-toggle');
+      var langLabel = document.getElementById('lang-label');
+      var themeToggle = document.getElementById('theme-toggle');
+      var themeLabel = document.getElementById('theme-label');
+      var themeIcon = document.getElementById('theme-icon');
+
+      function applyLanguage(lang) {
+        var dict = i18n[lang] || i18n.en;
+        root.setAttribute('data-lang', lang);
+        root.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        document.title = dict.page_title;
+        langLabel.textContent = dict.lang_btn;
+
+        document.querySelectorAll('[data-i18n]').forEach(function (el) {
+          var key = el.getAttribute('data-i18n');
+          if (dict[key] !== undefined) {
+            el.innerHTML = dict[key];
+          }
+        });
+
+        updateThemeUI(root.getAttribute('data-theme') || 'light');
+      }
+
+      function updateThemeUI(theme) {
+        var lang = root.getAttribute('data-lang') || 'en';
+        var dict = i18n[lang] || i18n.en;
+        themeLabel.textContent = theme === 'dark' ? dict.theme_dark : dict.theme_light;
+        themeIcon.innerHTML =
+          theme === 'dark'
+            ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>'
+            : '<circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>';
+      }
+
+      var initialLang = root.getAttribute('data-lang') || 'en';
+      applyLanguage(initialLang);
+
+      langToggle.addEventListener('click', function () {
+        var nextLang = root.getAttribute('data-lang') === 'zh' ? 'en' : 'zh';
+        applyLanguage(nextLang);
+        try {
+          localStorage.setItem('lang', nextLang);
+        } catch (e) {}
+      });
+
+      themeToggle.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        updateThemeUI(next);
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+
+      // Copy email with toast
+      var copyBtn = document.getElementById('copy-email');
+      var toast = document.getElementById('toast');
+      var toastTimer;
+
+      if (copyBtn && navigator.clipboard) {
+        copyBtn.addEventListener('click', function () {
+          var email = copyBtn.getAttribute('data-email');
+          navigator.clipboard.writeText(email).then(function () {
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(function () {
+              toast.classList.remove('show');
+            }, 2200);
+          });
+        });
+      } else if (copyBtn) {
+        copyBtn.style.display = 'none';
+      }
+
+      // Card spotlight hover effect
+      document.querySelectorAll('.card').forEach(function (card) {
+        card.addEventListener('mousemove', function (e) {
+          var rect = card.getBoundingClientRect();
+          card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+        });
+      });
+
+      // Scroll reveal
+      if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          observer.observe(el);
+        });
+      } else {
+        document.querySelectorAll('.reveal').forEach(function (el) {
+          el.classList.add('visible');
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
