@@ -528,6 +528,46 @@
       border-top: 1px dashed var(--line);
     }
 
+    .exp-card {
+      margin-top: 18px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .exp-main {
+      min-width: 0;
+    }
+
+    .exp-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .exp-company {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 650;
+      color: var(--text);
+    }
+
+    .exp-desc {
+      margin: 8px 0 0;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .exp-time {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--subtle);
+      white-space: nowrap;
+    }
+
     /* Research Interests Bento */
     .bento-3 {
       display: grid;
@@ -807,6 +847,13 @@
         padding: 22px;
       }
 
+      .exp-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px;
+        gap: 12px;
+      }
+
       footer {
         flex-direction: column;
         align-items: flex-start;
@@ -981,6 +1028,20 @@
           </div>
         </div>
       </div>
+
+      <div class="card exp-card">
+        <div class="exp-main">
+          <div class="edu-label" data-i18n="exp_label">Experience</div>
+          <div class="exp-header">
+            <h3 class="exp-company" data-i18n="exp_company">Du Xiaoman Financial (度小满)</h3>
+            <span class="pill accent" data-i18n="exp_badge">Industry-University Intern</span>
+          </div>
+          <p class="exp-desc" data-i18n="exp_desc">
+            Research focus: <strong>Face Forgery Detection</strong>.
+          </p>
+        </div>
+        <div class="exp-time" data-i18n="exp_time">2026.09 – Present</div>
+      </div>
     </section>
 
     <!-- Research Interests -->
@@ -1115,7 +1176,7 @@
           btn_blog: 'Read Blog',
           btn_email: 'Email',
           btn_copy: 'Copy Email',
-          sec_about_title: 'About &amp; Education',
+          sec_about_title: 'About, Education &amp; Experience',
           sec_about_kicker: '01 / PROFILE',
           about_p1: 'I am an undergraduate student majoring in <strong>Artificial Intelligence</strong> at the School of Future Technology, Harbin Institute of Technology. I am building a solid foundation across natural language processing, machine learning, deep learning, and reinforcement learning.',
           about_p2: 'My current focus lies in <strong>Large Language Models</strong> and <strong>AI Agents</strong>—especially how models plan, invoke tools, and reason reliably in multi-turn interactive environments.',
@@ -1123,6 +1184,11 @@
           edu_school: 'Harbin Institute of Technology',
           edu_degree: 'B.E. in Artificial Intelligence<br />School of Future Technology',
           edu_time: '2023 – Present',
+          exp_label: 'Experience',
+          exp_company: 'Du Xiaoman Financial (度小满)',
+          exp_badge: 'Industry-University Intern',
+          exp_desc: 'Research focus: <strong>Face Forgery Detection</strong>.',
+          exp_time: '2026.09 – Present',
           sec_interests_title: 'Research Interests',
           sec_interests_kicker: '02 / FOCUS',
           int_1_title: 'LLMs &amp; NLP',
@@ -1165,7 +1231,7 @@
           btn_blog: '阅读博客',
           btn_email: '发送邮件',
           btn_copy: '复制邮箱',
-          sec_about_title: '关于与教育经历',
+          sec_about_title: '简介、教育与经历',
           sec_about_kicker: '01 / 个人简介',
           about_p1: '我是哈尔滨工业大学未来技术学院<strong>人工智能</strong>专业的一名本科生，目前正在系统夯实自然语言处理、机器学习、深度学习与强化学习等基础理论与工程实践。',
           about_p2: '我当前的研究兴趣集中在<strong>大语言模型（LLM）</strong>与 <strong>AI 智能体（AI Agents）</strong>，重点关注模型如何在多轮交互环境中进行规划、调用工具并稳定完成复杂任务。',
@@ -1173,6 +1239,11 @@
           edu_school: '哈尔滨工业大学',
           edu_degree: '人工智能专业 · 工学学士（在读）<br />未来技术学院',
           edu_time: '2023 – 至今',
+          exp_label: '实习经历',
+          exp_company: '度小满',
+          exp_badge: '校企合作实习',
+          exp_desc: '研究内容：<strong>人脸伪造检测</strong>。',
+          exp_time: '2026.09 – 至今',
           sec_interests_title: '研究兴趣',
           sec_interests_kicker: '02 / 研究方向',
           int_1_title: '大语言模型与 NLP',
